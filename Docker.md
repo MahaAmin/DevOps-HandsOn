@@ -3,7 +3,7 @@
 ## Table of Content:
 1. [Docker Commands](#docker-commands)
 2. [More on Docker Run](#more-on-docker-run)
-3. [Example: Run NGINX](#example:-run-nginx)
+3. [Example: Run NGINX](#example-run-nginx)
 4. [Container Environment Variables](#container-environment-variables)
 5. [Docker Images](#docker-images)
 6. [CMD VS ENTRYPOINT](#cmd-vs-entrypoint)
@@ -35,10 +35,20 @@ docker stop <CID/CName>
 docker stop silly_sammet
 ```
 
+- Stop all running container:
+```
+docker stop $(docker ps -q)
+```
+
 - Delete container:
 ```
 docker rm <CID/CName>
 docker rm silly_sammet
+```
+
+- Delete all container:
+```
+docker rm $(docker ps -aq)
 ```
 
 - List existing images:
@@ -51,6 +61,12 @@ docker images
 ```
 docker rmi <IID/IName>
 ```
+
+- Delete all images:
+```
+docker rmi $(docker images -q)
+```
+
 
 - To know the base image of a container:
 ```
