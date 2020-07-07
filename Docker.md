@@ -12,6 +12,8 @@
 9. [Docker Compose](#docker-compose)
 10. [Sample Application - Voting Application](#sample-application-voting-application)
 11. [Docker Engine](#docker-engine)
+12. [Docker Regisrt](#docker-registry)
+13. [Docker for Windows and MAC](#docker-for-windows-and-mac)
 <hr>
 
 
@@ -301,10 +303,41 @@ mysql.connect( containerName );
 ## Docker Storage
 - Docker filesystem:
     - /var/lib/docker
+        - /var/lib/docker/aufs
         - /var/lib/docker/containers
+        - /var/lib/docker/image
         - /var/lib/docker/volumes
         
 - Layered architecture.
+
+- Volumes:
+    - Create a new volume:
+    ```
+    docker volume create data_volume
+    ```
+
+    - Mount a volume to a container:
+    ```
+    docker run -v data_volume:/var/lib/mysql mysql
+    ```
+
+    - Volume Mounting VS Bind Mounting:
+        - Volume mounting (from volumes present in /var/lib/docker/volumes): -v volume1:/var/lib/mysql
+        - Bind mounting (from anywhere): -v /data/mysql:/var/lib/mysql
+
+    - Using mount instead of -v is more recommended:
+    ```
+    docker run \
+    --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql
+    ```
+
+    - Storage Drivers:
+        - AUFS
+        - ZFS
+        - BTRFS
+        - Device Mapper
+        - Overlay
+        - Overlay2
 <hr>
 
 ## Docker Compose
@@ -463,8 +496,25 @@ worker:
 ## Docker Engine:
 
 - Docker engine consists of:
-    - Docker CLI
+    - Docker CLI:
+        - can be on remote machine other than host machine
+        - docker -H=remote-docker-engine:2375
     - REST API
     - Docker Deamon
 
+<hr>
+
+## Docker Registry
+
+- image: Registry/UserAccount/Image-Repository
+  image: docker.io/nginx/nginx
+
+- Login:
+```
+docker login private-registry.io
+```
+
+```
+docker run private-registry.io/apps/internal-app
+```
 <hr>
