@@ -9,6 +9,8 @@
 6. [CMD VS ENTRYPOINT](#cmd-vs-entrypoint)
 7. [Docker Networking](#docker-networking)
 8. [Docker Storage](#docker-storage)
+9. [Docker Compose](#docker-compose)
+10. [Sample Application - Voting Application](#sample-application-voting-application)
 <hr>
 
 
@@ -288,3 +290,156 @@ mysql.connect( containerName );
 - Layered architecture.
 <hr>
 
+## Docker Compose
+
+- If you want to run an complex application through multiple containers, for example:
+    - app
+    - mongodb
+    - reddis
+    - ansible
+- ... It is recommended to use docker compose.
+
+- docker-compose.yml:
+```
+services:
+    web:
+        image: "mmumshad/simple-webapp"
+    database:
+        image: "mongodb"
+    messaging:
+        image: "redis:alpine"
+    orchestration:
+        image: "ansible"
+```
+
+- Run docker-compose file:
+```
+docker-compose up
+```
+
+<hr>
+
+## Sample Application: Voting Application:
+
+- Architecture:
+    - voting-app (python)
+    - In-memory db (redis)
+    - worker (.Net)
+    - db (PostgresSQL)
+    - result-app (nodeJS)
+
+- Create application stack manually:
+```
+docker run -d --name=redis redis
+```
+```
+docker run -d --name=db postgress
+```
+
+```
+docker run -d --name=vote -p 5000:80 --link redis:redis voting-app
+```
+
+```
+docker run -d --name=result -p 5001:80 --link db:db result-app
+```
+
+```
+docker run --name=worker --link db:db --link redis:redis worker
+```
+
+- Transform the upper commands into docker-compose file **version 1** :
+```
+redis:
+    image: redis
+
+db:
+    image: postgres:9.4
+
+vote:
+    image: voting-app
+    # if the image is not yet built, and you want to build it from Dockerfile, change it to: build: ./vote-dir
+
+    ports:
+        - 5000:80
+    links:
+        - redis
+
+result:
+    image: result-app   # build: ./result-dir
+    ports:
+        - 5001:80
+    links:
+        - db
+
+worker:
+    image: worker   # build: ./worker-dir
+    links:
+        - db
+        - redis
+```
+
+
+- Docker-compose versions :
+    1. Version 1: above example
+    2. Version 2:
+        - No links sections, replaced by depends_on
+        ```
+        version: 2
+        services:
+            redis: 
+                ...
+            vote: 
+                ...
+                depends_on:
+                    - redis
+        ```
+    3. Version 3:
+        - Supports docker-swarm.
+        - No need for links nither depends_on setions. It creates network where containers created from the same docker-compose file can talk to eachother.
+
+        ```
+        version: 3
+        services:
+            redis:
+                ...
+            db:
+                ...
+            vote:
+                imgae: voting-app
+                ports:
+                    - 5000:80
+        ```
+
+- Create networks and attach containers to them:
+    ```
+    version: 2
+    services:
+        redis:
+            image: redis
+            networks:
+                - back-end
+        
+        db:
+            image: postgress:9.4
+            networks:
+                - back-end
+        
+        vote:
+            image: voting-app
+            networks:
+                - front-end
+                - back-end
+        
+        result: 
+            image: result
+            networks:
+                - front-end
+                - back-end
+    
+    networks:
+        front-end:
+        back-end:
+    ```
+
+<hr>
