@@ -3,7 +3,7 @@
 ## Table of Content:
 1. [Docker Commands](#docker-commands)
 2. [More on Docker Run](#more-on-docker-run)
-3. [Example: Run NGINX](#example:-run-nginx)
+3. [Example: Run NGINX](#example-run-nginx)
 4. [Container Environment Variables](#container-environment-variables)
 5. [Docker Images](#docker-images)
 6. [CMD VS ENTRYPOINT](#cmd-vs-entrypoint)
