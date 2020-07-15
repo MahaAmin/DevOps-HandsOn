@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := cmd2
+
 cmd1:
 	@echo "This is cmd1"
 

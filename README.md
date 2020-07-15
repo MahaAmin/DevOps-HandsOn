@@ -1,4 +1,4 @@
-# DevOps Task 
+# DevOps Tasks 
 
 ## Table Of Content:
 1. [Docker](Docker.md)
