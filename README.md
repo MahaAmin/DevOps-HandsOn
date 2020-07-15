@@ -5,6 +5,7 @@
 2. [Dockerfile](#dockerfile)
 3. [Ansible](#ansible)
 4. [Monitoring Tools](#monitoring-tools)
+5. [Locust Load Test](#locust-load-test)
 
 <hr>
 
@@ -26,3 +27,9 @@ Multistaged Dockerfile :
 ## Monitoring Tools:
 
 [Monitoring Tools Study Book](Monitoring.md)
+
+<hr>
+
+## Locust Load Test:
+
+[Getting Started With Locust Load Testing](locust/Locust-Load-Test.md)
