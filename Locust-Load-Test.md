@@ -63,7 +63,7 @@
 
     - open http://localhost:8089 in a web browser.
 
-![LOCUST](../img/locust.png)
+![LOCUST](img/locust.png)
 
 
 - A simple test can be:
@@ -71,7 +71,7 @@
     - Add 1 user per second
     - The web app runs on http://localhost:8080
 
-![locust-chart](../img/locust-chart.png)
+![locust-chart](img/locust-chart.png)
     
 
     

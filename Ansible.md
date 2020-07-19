@@ -78,6 +78,7 @@ three.example.com
 
 
 <hr>
+
 ## Ansible Templates:
 
 - Isolate variables in template file.
