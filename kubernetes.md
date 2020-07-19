@@ -14,7 +14,7 @@
     9. [KubeCtl](#kubectl)
     10. [YAML](#yaml)
     11. [YAML In Kubernetes](#yaml-in-kubernetes)
-    11. [Kubernetes on Cloud](#kubernetes-on-cloud)
+    12. [Kubernetes on Cloud](#kubernetes-on-cloud)
 2. [Kubernetes Certificates](#kubernetes-certificates)
 3. [Notes](#notes)
 3. [Resources](#resources)
@@ -113,6 +113,26 @@
         - They can communicate with eachother as "localhost", as they are in the same pod.
         - When scaling up all containers in the same pods get replicated, and in scaling down all containers die together.
 
+- **Replication Controllers:**
+    - Controllers are the brain behind kubernetes.
+    - It is used in :
+        - **High Availability**.
+        - **Load Balancing**
+        - **Scaling**
+    - Replication controller spans across multiple nodes (machines) in the cluster.
+    - Replication controller is the old version of **Replica Set**.
+
+    - Define replication controller with .yaml file: [Kubernetes/rc-definition.yaml](Kubernetes/rc-definition.yaml)
+
+    - To deploy the replication controller:
+        ```
+        kubectl create -f rc-definition.yaml
+        ```
+
+
+- **Replica Sets:**
+
+
 <hr>
 
 ### KubeCtl:
@@ -172,9 +192,15 @@
     kubectl describe pod nginx
     ```
 
+- To deploy the replication controller:
+    ```
+    kubectl create -f rc-definition.yaml
+    ```
 
-
-
+- To show all replication controllers:
+    ```
+    kubectl get replicationcontroller
+    ```
 
 <hr>
 
