@@ -7,13 +7,14 @@
     2. [Docker Containers](#docker-containers)
     3. [Containers Orchestration](#containers-orchestration)
     4. [Kubernetes Architecture](#kubernetes-architecture)
-    4. [Kubernetes Setup](#kubernetes-setup)
+    5. [Kubernetes Setup](#kubernetes-setup)
     6. [Minikube](#minikube)
-    5. [Kubernetes Concepts (PODs - ReplicaSets - Deployment - Services)](#kubernetes-concepts)
-    6. [Networking in Kubernetes](#networking-in-kubernetes)
-    7. [KubeCtl](#kubectl)
-    8. [YAML](#yaml)
-    9. [Kubernetes on Cloud](#kubernetes-on-cloud)
+    7. [Kubernetes Concepts (PODs - ReplicaSets - Deployment - Services)](#kubernetes-concepts)
+    8. [Networking in Kubernetes](#networking-in-kubernetes)
+    9. [KubeCtl](#kubectl)
+    10. [YAML](#yaml)
+    11. [YAML In Kubernetes](#yaml-in-kubernetes)
+    11. [Kubernetes on Cloud](#kubernetes-on-cloud)
 2. [Kubernetes Certificates](#kubernetes-certificates)
 3. [Notes](#notes)
 3. [Resources](#resources)
@@ -152,6 +153,11 @@
     kubectl run nginx --image nginx
     ```
 
+- To create the pod from .yml file:
+    ```
+    kubectl create -f my-file.yml
+    ```
+
 - List existing pods:
     ```
     kubectl get pods
@@ -168,6 +174,104 @@
 
 
 
+
+
+<hr>
+
+
+### YAML:
+
+- **YAML:** Yet Another Markup Language.
+- Do NOT use tab, use 2 spaces and stick to it.
+- Key-Value pair:
+    ```
+    Fruit: Apple
+    Vegetable: Carrot
+    Liquid: Water
+    Meat: Chicken
+    ```
+
+- Array/List:
+    ```
+    Fruits:
+    - Apple
+    - Orange
+    - Banana
+
+    Vegetables:
+    - Carrot
+    - Tomato
+    ```
+
+- Dictinoray/Map:
+    ```
+    Banana:
+      Calories: 105
+      Fat: 0.4 g
+      Carbs: 27 g
+
+    Grapes:
+      Calories: 62
+      Fat: 0.3 g
+      Carbs: 16 g
+    ```
+
+- Key Value/Dictionary/Lists:
+    ```
+    Fruits:
+    - Banana:
+        Calories: 105
+        Fat: 0.4 g
+        Carbs: 27 g
+
+    - Grapes:
+        Calories: 62
+        Fat: 0.3 g
+        Carbs: 16 g
+    ```
+
+- Dictionary --> unordered
+- Lists --> ordered
+
+<hr>
+
+
+
+### YAML In Kubernetes:
+
+- Basic template of kubernetes .yml file. These fileds are **required** :
+
+    ```
+    apiVersion:
+    kind:
+    metadata:
+
+
+    spec:
+    ```
+
+- apiVersion: the version of kubernetes API we are using to create the object.
+
+- Example: 
+
+    ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: myapp-pod
+      labels:
+        app: myapp
+        type: front-end            
+    spec:
+      containers:
+        - name: nginx-container
+          image: nginx
+    ```
+
+- To create the pod from .yml file:
+    ```
+    kubectl create -f my-file.yml
+    ```
 <hr>
 
 
