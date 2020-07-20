@@ -28,6 +28,18 @@ Multistaged [Dockerfile](Docker/Dockerfile) :
 
 <hr>
 
+## Jenkins
+[Jenkins Study Book](Jenkins/README.md)
+
+<hr>
+
+
+## Make
+
+[Make Study Book](make.md)
+
+<hr>
+
 ## Ansible
 
 [Ansible Study Book](Ansible.md)
