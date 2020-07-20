@@ -111,6 +111,8 @@
         - They can communicate with eachother through "localhost", as they are in the same pod.
         - When scaling up all containers in the same pods get replicated, and in scaling down all containers die together.
 
+    <hr>
+
 - **Replication Controllers:**
     - Controllers are the brain behind kubernetes.
     - It is used in :
@@ -126,7 +128,7 @@
         ```
         kubectl create -f rc-definition.yaml
         ```
-
+    <hr>
 
 - **Replica Sets:**
     - The main difference between Replication-Controller and ReplicaSet is the **"selector"** tag.
@@ -146,6 +148,44 @@
     ```
     kubectl delete replicaset myapp-relicaset
     ```
+    <hr>
+
+- **Deployments:**
+
+    - **Rollout:** Deploying new version of the application.
+    - **Deploying Strategies:**
+        - **Recreate Strategy:** 
+            - Destroy all pods of older version, then create new pods with the newer version. 
+            - This leads to application downtime.
+
+        - **Rolling Update:** 
+            - Delete and create pods one by one.
+            - The default strategy in kubernetes.
+
+    - The deployment yaml file is exactly the same as the replicaset yaml file except that the kind: Deployment.
+    - Deployment automatically creates a replicaset.
+
+<hr>
+
+### Networking In Kubernetes 
+
+- There is an IP assigned to the cluster.
+- IPs are assigned to pods not containers.
+- There are two modes of networking in kubernetes:
+    - Single node kubernetes.
+    - Kubernetes Cluster.
+- Single node networking:
+    - A sub-network is created with an IP.
+    - All pods are part of this sub-network.
+    - All pods can communicate with eachother without IP conflicts.
+
+- Cluster Networking:
+    - Each node in the cluster has unique IP.
+    - Pods in different nodes can have the same IP, which can cause IP conflict in their communication.
+    - Kubernetes expects that kubernetes admin should apply a solution that gurantees that:
+        - All containers/pods can communicate to one another without NAT.
+        - All nodes can communicate with all containers and vice-versa without NAT.
+    - There are many solutions that can solve the required criteria, example: cisco, vmware NSX, flannel, cilium, ...etc. They manage IP addressing and routing techinques.
 
 <hr>
 
@@ -160,6 +200,11 @@
 - Start minikube:
     ```
     minikube start --driver=virtualbox
+    ```
+
+- Get all objects:
+    ```
+    kubectl get all
     ```
 
 - Deploy an application on the cluster:
@@ -246,6 +291,25 @@
 
     ```
     kubectl delete replicaset myapp-relicaset
+    ```
+
+- To edit a resource:
+    ```
+    kubectl edit <type> <name>
+    ```
+
+    ```
+    kubectl edit replicaset myapp-replicaset
+    ```
+
+- Rolling update (apply updates) to deployment:
+    ```
+    kubectl apply -f deployment.yaml
+    ```
+
+- Rollback a deployment:
+    ```
+    kubectl rollout undo deployment/myapp-deployment
     ```
 
 <hr>
