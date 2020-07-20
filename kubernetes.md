@@ -204,8 +204,11 @@
     - ClusterIP
     - LoadBalancer
 
-- NodePort:
-    [nodeport.yaml](Kubernetes/services/nodeport-defenition.yaml)
+    <hr>
+
+**NodePort:**
+
+[nodeport.yaml](Kubernetes/services/nodeport-defenition.yaml)
 
 ![nodeport](img/nodePort.png)
 
@@ -216,8 +219,20 @@
 
 - NodePort uses "Random Algorithm" to balance the load across pods by default.
 
+- To print the url of the nodeport:
+    ```
+    minikube service myapp-nodeport --url
+    ```
+    <hr>
 
-<hr>
+**ClusterIP:**
+
+- ClusterIP service is used to group pods based on labels, and asssigns an IP to communicate with them.
+
+- [clusterip.yaml](Kubernetes/services/clusterip-defenition.yaml)
+
+![clusterIP](img/clusterip.png)
+
 
 
 ### KubeCtl
@@ -341,6 +356,11 @@
 - Rollback a deployment:
     ```
     kubectl rollout undo deployment/myapp-deployment
+    ```
+
+- To print the url of the nodeport:
+    ```
+    minikube service myapp-nodeport --url
     ```
 
 <hr>
