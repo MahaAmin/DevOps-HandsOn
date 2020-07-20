@@ -56,7 +56,7 @@
 - **Nodes (Minios):** is a machine physical or virtual.
 - **Cluster:** set of nodes grouped together.
 - **Master:** a node where kubernetes is installed, and configured as master. Responsible of the actual orchestration of containers in the worker nodes.
-- **Container Runtime**: Docker, 
+- **Container Runtime**: Docker engine.
 
 <hr>
 
@@ -92,8 +92,6 @@
     minikube status
     ```
 
-- 
-
 
 <hr>
 
@@ -106,11 +104,11 @@
     - To scale down --> delete pods.
     - **Multi-Container PODS:**
         - A single pod can have multiple containers inside it.
-        - Multiple container but in **different types**.
+        - Multiple containers but in **different types**.
         - They are called **Helper containers**. Containers that are highly assciociated with the main container in the pod.
         - Multiple containers are not intended for scaling, but rather for functionality.
         - Containers in the same pod shares the same network-space, and storage-space. 
-        - They can communicate with eachother as "localhost", as they are in the same pod.
+        - They can communicate with eachother through "localhost", as they are in the same pod.
         - When scaling up all containers in the same pods get replicated, and in scaling down all containers die together.
 
 - **Replication Controllers:**
@@ -122,7 +120,7 @@
     - Replication controller spans across multiple nodes (machines) in the cluster.
     - Replication controller is the old version of **Replica Set**.
 
-    - Define replication controller with .yaml file: [Kubernetes/rc-definition.yaml](Kubernetes/rc-definition.yaml)
+    - Define replication controller with .yaml file: [rc-definition.yaml](Kubernetes/replicasets/rc-definition.yaml)
 
     - To deploy the replication controller:
         ```
@@ -131,7 +129,23 @@
 
 
 - **Replica Sets:**
+    - The main difference between Replication-Controller and ReplicaSet is the **"selector"** tag.
+    - The selector tag enables replicaset to manage pods that were not created by the replicaset, for example: pods that are existed before the creation of the replicaset.
+    - The selector tag is **NOT** required.  
 
+    - To scale the number of desired pods in the replicaset:
+        - Change the value of replicas inside the replicaset.yaml file, then use kubectl to replace the old replicaset.
+
+        - Use kubectl scale command:
+            ```
+            kubectl scale --replicas=6 -f replicaset.yaml
+            ```
+
+    - To delete a replicaset. **This will delete the replicaset and all underlying pods**:
+
+    ```
+    kubectl delete replicaset myapp-relicaset
+    ```
 
 <hr>
 
@@ -200,6 +214,38 @@
 - To show all replication controllers:
     ```
     kubectl get replicationcontroller
+    ```
+
+- To show all replicasets:
+    ```
+    kubectl get replicaset
+    ```
+
+- To edit a replicaset:
+    ```
+    kubectl replace -f replicaset-defenition.yaml
+    ```
+
+- To scale (change the number of desired pods) a replicaset:
+    ```
+    kubectl scale --replicas=6 -f replicaset.yaml
+    ```
+
+    ```
+    kubectl scale --replicas=<number-of-desired-pods> <type> <name>
+    ```
+
+    ```
+    kubectl scale --replicas=5 replicaset myapp-replicaset
+    ```
+
+- To delete an object:
+    ```
+    kubectl delete <type> <name>
+    ```
+
+    ```
+    kubectl delete replicaset myapp-relicaset
     ```
 
 <hr>
@@ -316,4 +362,4 @@
 
 ## Resources:
 
-- [Kubernetes for the absolute beginners](https://cegedim-france.udemy.com/course/learn-kubernetes/learn/lecture/9703196#overview)
+- [Kubernetes for the absolute beginners](https://www.udemy.com/course/learn-kubernetes/)
