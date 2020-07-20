@@ -9,12 +9,13 @@
     4. [Kubernetes Architecture](#kubernetes-architecture)
     5. [Kubernetes Setup](#kubernetes-setup)
     6. [Minikube](#minikube)
-    7. [Kubernetes Concepts (PODs - ReplicaSets - Deployment - Services)](#kubernetes-concepts)
+    7. [Kubernetes Concepts (PODs - ReplicaSets - Deployment)](#kubernetes-concepts)
     8. [Networking in Kubernetes](#networking-in-kubernetes)
-    9. [KubeCtl](#kubectl)
-    10. [YAML](#yaml)
-    11. [YAML In Kubernetes](#yaml-in-kubernetes)
-    12. [Kubernetes on Cloud](#kubernetes-on-cloud)
+    9. [Kubernetes Services](#kubernetes-services)
+    10. [KubeCtl](#kubectl)
+    11. [YAML](#yaml)
+    12. [YAML In Kubernetes](#yaml-in-kubernetes)
+    13. [Kubernetes on Cloud](#kubernetes-on-cloud)
 2. [Kubernetes Certificates](#kubernetes-certificates)
 3. [Notes](#notes)
 3. [Resources](#resources)
@@ -189,7 +190,37 @@
 
 <hr>
 
-### KubeCtl:
+
+### Kubernetes Services
+
+- Services allows communication between several components,and between users and the application.
+
+- Services allows loose coupling between microservices.
+
+- Service is an object/resource just like pods and replicaset.
+
+- Types of services:
+    - NodePort
+    - ClusterIP
+    - LoadBalancer
+
+- NodePort:
+    [nodeport.yaml](Kubernetes/services/nodeport-defenition.yaml)
+
+![nodeport](img/nodePort.png)
+
+- Basic example af accessing a webapp through nodePort:
+    ```
+    curl http://192.168.1.2:30008
+    ```
+
+- NodePort uses "Random Algorithm" to balance the load across pods by default.
+
+
+<hr>
+
+
+### KubeCtl
 
 - Kubernetes Command-line tool.
 - Kube-Control.
