@@ -12,13 +12,14 @@
     7. [Kubernetes Concepts (PODs - ReplicaSets - Deployment)](#kubernetes-concepts)
     8. [Networking in Kubernetes](#networking-in-kubernetes)
     9. [Kubernetes Services](#kubernetes-services)
-    10. [KubeCtl](#kubectl)
-    11. [YAML](#yaml)
-    12. [YAML In Kubernetes](#yaml-in-kubernetes)
-    13. [Kubernetes on Cloud](#kubernetes-on-cloud)
+    10. [Microservices Architecture](#microservices-architecture)
+    11. [KubeCtl](#kubectl)
+    12. [YAML](#yaml)
+    13. [YAML In Kubernetes](#yaml-in-kubernetes)
+    14. [Kubernetes on Cloud](#kubernetes-on-cloud)
 2. [Kubernetes Certificates](#kubernetes-certificates)
 3. [Notes](#notes)
-3. [Resources](#resources)
+4. [Resources](#resources)
 
 
 <hr>
@@ -123,7 +124,7 @@
     - Replication controller spans across multiple nodes (machines) in the cluster.
     - Replication controller is the old version of **Replica Set**.
 
-    - Define replication controller with .yaml file: [rc-definition.yaml](Kubernetes/replicasets/rc-definition.yaml)
+    - Define replication controller with .yaml file: [rc-definition.yaml](Kubernetes/kubernetes-for-beginners/replicasets/rc-definition.yaml)
 
     - To deploy the replication controller:
         ```
@@ -198,17 +199,14 @@
 - Services allows loose coupling between microservices.
 
 - Service is an object/resource just like pods and replicaset.
-
-- Types of services:
-    - NodePort
-    - ClusterIP
+better
     - LoadBalancer
 
     <hr>
 
 **NodePort:**
 
-[nodeport.yaml](Kubernetes/services/nodeport-defenition.yaml)
+[nodeport.yaml](Kubernetes/kubernetes-for-beginners/services/nodeport-defenition.yaml)
 
 ![nodeport](img/nodePort.png)
 
@@ -229,11 +227,21 @@
 
 - ClusterIP service is used to group pods based on labels, and asssigns an IP to communicate with them.
 
-- [clusterip.yaml](Kubernetes/services/clusterip-defenition.yaml)
+- [clusterip.yaml](Kubernetes/kubernetes-for-beginners/services/clusterip-defenition.yaml)
 
 ![clusterIP](img/clusterip.png)
 
+ <hr> 
 
+ **LoadBalancer:**
+ 
+
+ <hr>
+
+ ### Microservices Architecture
+
+
+ <hr>
 
 ### KubeCtl
 
