@@ -4,8 +4,7 @@
 
 1. [Core Concepts](#core-concepts)
     1. [Cluster Architecture](#cluster-architecture)
-    2. [API Primitives](#api-primitives)
-    3. [Services and Other Network Primitives](#services-and-other-network-primitives)
+    2. [Namespaces](#namespaces)
 2. [Scheduling](#scheduling)
     1. [Labels And Selectors](#labels-and-selectors)
     2. [Resource Limits](#resource-limits)
@@ -188,7 +187,7 @@
 
 <hr>
 
-**Namespaces:**
+### Namespaces
 
 - There are 3 namespaces created automatically by kubernetes, at the cluster creation: 
     - "Default" namespace.
@@ -229,6 +228,10 @@
     kubectl get pods --all-namespaces
     ```
 
+- Send manual scheduling post request:
+    ```
+    curl --header "Content-Type:application/json" --request POST --data $(kubectl get pod nginx -o json) http://$SERVER/api/v1/namespaces/default/pods/$PODNAME/binding
+    ```
 ### Notes:
 
 - There are two ways to setup kubernetes:
