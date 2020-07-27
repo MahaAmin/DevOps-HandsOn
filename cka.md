@@ -66,6 +66,9 @@
     3. [Control Plane Failure](#control-plane-failure)
     4. [Networking](#networking)
 
+11. [Commands](#commands)
+12. [Notes](#notes)
+
 <hr>
 
 
@@ -89,7 +92,6 @@
 
 <hr>
 
-### API Primitives
 
 **ETCD:**
 
@@ -111,3 +113,124 @@
     - All information from **kubectl get** are retrieved from etcd server.
 
     - Every change made on the cluster gets updated in the etcd.
+
+
+
+<hr>
+
+
+**Kube API Server:**
+
+- Primary management component in kubernetes.
+- KubeCtl talks to it.
+- KubeCtl is not mandatory need, POST requests can be send directly to Kube-API.
+- The only component that communicates with etcd.
+- Kube API Server responsible for:
+    - Authenticate User.
+    - Validate Request.
+    - Retrieve Data.
+    - Update ETCD.
+    - Scheduler.
+    - Kubelet. 
+
+<hr>
+
+
+**Kube Controller Manager:**
+- It manages several controllers in kubernetes.
+- Kube controller manager contains many controllers:
+    - Node controller:
+        - It checks if the worker nodes are still up by reading heart-beats from worker them through kupe-api. If a node become unreachable for specific time it is marked as down and get replaced.
+    - Replication controller:
+        - It is responsible for checking the replicasets and the contained pods.
+        - If a pod dies, it creates anotherone.
+    - Deployment controller.
+    - Namespace controller.
+    - Endpoint controller.
+    - CronJob.
+    - Job controller.
+    - PV-Protection controller.
+    - Service account controller.
+    - Stateful set.
+    - Replicaset.
+    - PV-Binder controller.
+
+- When kube controller manager gets installed, all the sub-controllers get installed with it.
+
+- The role of all these controllers:
+    - Watch cluster status.
+    - Take actions to keep the cluster in the desired state.
+
+
+<hr>
+
+**Kube Scheduler:**
+- It decides which pod goes to which worker node.
+- Filter nodes.
+- Rank nodes.
+
+<hr>
+
+**Kubelet:**
+
+- Register nodes.
+- Create PODs.
+- Monitor nodes and pods.
+
+- Kubeadm does NOT automatically deploy kubelets, kubelets must be manually configured on each node.
+
+<hr>
+
+
+**Kube-Proxy:**
+
+- Internal network to let nodes reach each other.
+
+<hr>
+
+**Namespaces:**
+
+- There are 3 namespaces created automatically by kubernetes, at the cluster creation: 
+    - "Default" namespace.
+
+    - "kube-system" namespace: it contains kubernete's resources (ex: pods).
+
+    - "kube-public" namespace, it is where resources will be available to all users.
+
+- Namespaces are used for isolating the environments and set polices and resource quotas. (ex: dev, prod).
+
+- DNS:
+    - Resources in "default" NS, can be used without prefixes: db-service = db-service.dev.srv.cluster.local
+
+    ![ns](img/namespace.png)
+
+<hr>
+
+
+### Commands:
+
+- Get resources of specific namespace:
+    ```
+    kubectl get pods --namespace=kube-system
+    ```
+
+- Create new namespace:
+    ```
+    kubectl create namespace <dev>
+    ```
+
+- Switch to a namespace:
+    ```
+    kubectl config set-context $(kubectl config current-context) --namespace=<dev>
+    ```
+
+- View resources in all namespaces:
+    ```
+    kubectl get pods --all-namespaces
+    ```
+
+### Notes:
+
+- There are two ways to setup kubernetes:
+    - Manual setup.
+    - Using Kubeadm. 
