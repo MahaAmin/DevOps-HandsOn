@@ -205,6 +205,59 @@
 
 <hr>
 
+## Scheduling
+
+### Labels And Selectors
+
+- Select resources based on labels:
+    ```
+    kubectl get pods --selector env=prod,tier=frontend,bu=finance
+    ```
+
+<hr>
+
+### Resource Limits
+
+**Taints and Tolerations:**
+
+- **Taint:** prevent pods from being deployed on a certain node. This is useful if a node has dedicated resources to certain tasks.
+
+- To taint a node:
+    ```
+    kubectl taint nodes <node-name> <key>=<value>:<taint-effect>
+    ```
+
+- There are 3 options for the taint-effect:
+    - NoSchedule: the pod will not be deployed on the node.
+    - PreferNoSchedule: system will try not to deploy the pod on the node, but that is not guranted.
+    - NoExecute: new pods 
+
+- **Toleration:** give permission to a pod to be able to be deployed on a certain node.
+
+- To add toleration to a pod: [pod-toleration](Kubernetes/cka-preparations/pod-toleration.yaml)
+
+
+**Node Selectors:**
+
+- Specify which node the pod will be deployed on.
+- This is useful if we have a pod that executes heavy tasks, and needs high resources.
+
+- To assign pod to a specific node, add nodeSelector attribute. [pod-node-selector.yaml](Kubernetes/cka-preparations/pod-node-selector.yaml)
+
+- To label a node:
+    ```
+    kubectl label node <NodeName> <label-key>=<label-value>
+    ```
+
+**Node Affinity:**
+
+- Add complex options more than nodeSelector.
+
+[pod-node-affinity.yaml](Kubernetes/cka-preparations/pod-node-affinity.yaml)
+
+[deployment-node-affinity.yaml](Kubernetes/cka-preparations/deployment-node-affinity.yaml)
+
+<hr>
 
 ### Commands:
 
@@ -232,6 +285,29 @@
     ```
     curl --header "Content-Type:application/json" --request POST --data $(kubectl get pod nginx -o json) http://$SERVER/api/v1/namespaces/default/pods/$PODNAME/binding
     ```
+
+- Select resources based on labels:
+    ```
+    kubectl get pods --selector env=prod,tier=frontend,bu=finance
+    ```
+
+- To taint a node:
+    ```
+    kubectl taint nodes <node-name> <key>=<value>:<taint-effect>
+    ```
+
+    ```
+    kubectl taint nodes node1 app=blue:NoSchedule
+    ```
+
+- To label a node:
+    ```
+    kubectl label node <NodeName> <label-key>=<label-value>
+    ```
+    ```
+    kubectl label node node01 size=Large
+    ```
+
 ### Notes:
 
 - There are two ways to setup kubernetes:
