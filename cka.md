@@ -10,6 +10,7 @@
     2. [Resource Limits](#resource-limits)
     3. [Manual Scheduling](#manual-scheduling)
     4. [Daemon Sets](#daemon-sets)
+    5. [Static Pods](#static-pods)
     5. [Multiple Schedulers](#multiple-schedulers)
     6. [Scheduler Events](#scheduler-events)
     7. [Configure Kubernetes Scheduler](#configure-kubernetes-scheduler)
@@ -257,9 +258,45 @@
 
 [deployment-node-affinity.yaml](Kubernetes/cka-preparations/deployment-node-affinity.yaml)
 
+
+**Resource Requirments and Limits:**
+
+<hr>
+
+
+### Daemon Sets
+
+- Daemonsets are like replicasets, however it runs signle pod on every node.
+
+- Use cases of a daemonset:
+    - Monitoring.
+    - Logging.
+    - kube-proxy component is an example of daemonset usecases.
+
+- Created by Kube-API server (DaemonSet Controller)
+- Ignored by the Kube-Scheduler.
+
+<hr>
+
+### Static Pods
+
+- Pods created by the kubelet.
+- Usecases: Deploy control plane (master node) components as static pod.
+- Ignored by the Kube-Scheduler.
+
+<hr>
+
+### Multiple Schedulers
+
+
 <hr>
 
 ### Commands:
+
+- Add kubectl auto-completion script:
+    ```
+    source <(kubectl completion bash)
+    ```
 
 - Get resources of specific namespace:
     ```
@@ -306,6 +343,28 @@
     ```
     ```
     kubectl label node node01 size=Large
+    ```
+
+- Enable metrics-server for monitoring:
+    ```
+    minikube addons enable metrics-server
+    ```
+
+- Monitor resources consumption:
+    ```
+    kubectl top node
+    ```
+    ```
+    kubectl top pod
+    ```
+
+- Run a command on a container pod:
+    ```
+    kubectl exec --stdin --tty <webapp> -- <command> <args>
+    ```
+
+    ```
+    kubectl exec --stdin --tty webapp -- cat log/app.logs
     ```
 
 ### Notes:

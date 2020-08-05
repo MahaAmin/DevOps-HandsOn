@@ -79,6 +79,11 @@
     - Hypervisor (VirtualBox)
     - KubeCtl.
 
+- Add kubectl auto-completion script:
+    ```
+    source <(kubectl completion bash)
+    ```
+    
 <hr>
 
 
