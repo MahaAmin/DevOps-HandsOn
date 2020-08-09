@@ -291,6 +291,86 @@
 
 <hr>
 
+### Design A Kubernetes Cluster
+
+**When designing a kubernetes cluster, ask yourself these questions:**
+
+- Purpose:
+    - Education.
+    - Development and Testing.
+    - Hosting production Applications.
+
+- Cloud or OnPrem?
+- Workloads:
+    - How many applications will be hosted on the cluster?
+    - What kind of applications:
+        - Web.
+        - Big Data/Analytics?
+    - Application Resource Requirements:
+        - CPU Intesive.
+        - Memory Intensive.
+    - Traffic:
+        - Heavy traffic.
+        - Burst traffic.
+
+
+**Choosing kubernetes infrastructure:**
+
+- Kubernetes can be deployed on various platforms:
+    - Local machine:
+        - Minikube single node cluster. It configures the VMs by itself.
+        - Kubeadm single or multiple node cluster. Expects the VMs are configured already.
+
+    - Hosted (Managed) solutions:
+        - Kubernetes-As-A-Service.
+        - Provider provisions VMs.
+        - Provider installs Kubernetes.
+        - Provider maintains VMs.
+        - Eg: Google Kubernetes Engine (GKE).
+        - OpenShift Online.
+        - Azure Kubernetes Service.
+        - Amazon Elastic Container Service for kubernetes.
+
+    - Turnkey Solutions:
+        - You provision VMs.
+        - You configure VMs.
+        - You use scripts to deploy a cluster.
+        - You maintain VMs yourself.
+        - Eg: Kubernetes on AWS using KOPS.
+        - Openshift
+        - CloudFoundry Container Runtime
+        - VMWare Cloud PKS.
+        - Vagrant.
+
+
+
+**ETCD In High Availability (HA):**
+ - **Quorom:** minimum number of nodes that must be available for the cluster to function properly. (N/2+1)
+
+ |Instances|Quorom|Fault Tolerance|
+ |:-------:|:----:|:-------------:|
+ |1|1|0|
+ |2|2|0|
+ |3|2|1|
+ |4|3|1|
+ |5|3|2|
+ |6|4|2|
+ |7|4|3|
+
+ - It is recommended to use odd number larger than 2 of instances.
+
+**Our Design:**
+- 5 nodes:
+    - 1 Loadbalancer node.
+    - 2 Master nodes.
+    - 2 Worker nodes.
+
+- Stacked master design: etcd is in the same node as master node.
+
+- We will create these nodes as VMs on **virtualbox** using **Vagrant**.
+
+<hr>
+
 ### Commands:
 
 - Add kubectl auto-completion script:
