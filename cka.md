@@ -273,7 +273,9 @@
     - Logging.
     - kube-proxy component is an example of daemonset usecases.
 
-- Created by Kube-API server (DaemonSet Controller)
+- Created by Kube-API server (DaemonS
+
+et Controller)
 - Ignored by the Kube-Scheduler.
 
 <hr>
@@ -291,7 +293,13 @@
 
 <hr>
 
-### Design A Kubernetes Cluster
+## Security
+
+- **PKI:** Public Key Infrastructure.
+
+<hr>
+
+## Design A Kubernetes Cluster
 
 **When designing a kubernetes cluster, ask yourself these questions:**
 
